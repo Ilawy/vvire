@@ -1,6 +1,5 @@
 import dynamic from "next/dynamic";
-import { Suspense } from "react";
-import { fetchArticle, publishArticle, updateArticle } from "@/app/actions";
+import { fetchArticle, updateArticle } from "@/app/actions";
 import { NotFoundError } from "@/lib/result";
 import { notFound } from "next/navigation";
 import { DateTime } from "luxon";

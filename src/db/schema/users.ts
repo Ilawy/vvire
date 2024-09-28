@@ -1,11 +1,10 @@
-import { sql } from "drizzle-orm";
 import {
   text,
   integer,
   sqliteTable,
   primaryKey,
 } from "drizzle-orm/sqlite-core";
-import { createInsertSchema, createSelectSchema } from "drizzle-zod";
+import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 import type { AdapterAccountType } from "next-auth/adapters";
 

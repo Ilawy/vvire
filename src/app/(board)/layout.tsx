@@ -1,6 +1,5 @@
 import { redirect } from "next/navigation";
 import { auth } from "../auth";
-import { cloneElement } from "react";
 
 export default async function BoardLayout({
   children,

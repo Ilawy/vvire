@@ -1,8 +1,7 @@
 import { Err, Ok, Result } from "ts-results-es";
-import { z, ZodAny, ZodTypeAny } from "zod";
 
 // prettier-ignore
-export async function resultify<O extends any, E extends Error = Error>(promise: Promise<O>){
+export async function resultify<O, E extends Error = Error>(promise: Promise<O>){
     return promise.then(Ok<O>).catch(Err<E>)
 }
 

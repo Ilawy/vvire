@@ -1,10 +1,9 @@
 import { FormEvent, FormEventHandler } from "react";
-import { Result, Ok, Err } from "ts-results-es";
-import { z, ZodRawShape, ZodTypeAny } from "zod";
+import { z, ZodTypeAny } from "zod";
 import { zfd } from "zod-form-data";
 
 export function validateForm<T extends ZodTypeAny>(
-  //@ts-ignore
+  //@ts-expect-error zod type
   schema: ReturnType<typeof zfd.formData<T>>,
   callback: (data: z.infer<T>, event: FormEvent<HTMLFormElement>) => void
 ): FormEventHandler<HTMLFormElement> {

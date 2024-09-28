@@ -2,9 +2,7 @@ import {
   text,
   integer,
   sqliteTable,
-  unique,
   uniqueIndex,
-  check,
 } from "drizzle-orm/sqlite-core";
 import { users } from "./users";
 import { createInsertSchema } from "drizzle-zod";

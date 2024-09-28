@@ -10,8 +10,7 @@ import { TelegramUserData } from "@telegram-auth/server";
 import * as nh from "next/headers";
 import { auth } from "./auth";
 import { Article, articles, redirects } from "@/db/schema/models";
-import { OutputBlockData, OutputData } from "@editorjs/editorjs";
-import slugify from "slugify";
+import { OutputData } from "@editorjs/editorjs";
 import { LibsqlError } from "@libsql/client";
 import { and, eq } from "drizzle-orm";
 import { Err, Ok, Result } from "ts-results-es";
@@ -157,7 +156,7 @@ export async function updateArticle(
     db
       .update(articles)
       //TODO FIX ZOD TYPES
-      // @ts-expect-error
+      // @ts-expect-error zod types
       .set(data)
       .where(and(eq(articles.slug, slug), eq(articles.added_by, id)))
       .returning({
@@ -186,6 +185,7 @@ export async function fetchArticle(
     Pick<Article, "title" | "slug" | "added_at"> & {
       author: string;
       author_id: string;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       content: any;
     },
     Error
@@ -217,7 +217,7 @@ export async function fetchArticle(
       if(current_user.user?.id !== result.value.author_id) return Err(new NotFoundError());
     }
     //TODO FIXME
-    //@ts-expect-error
+    //@ts-expect-error zod types
     return Ok(result.value);
   }
   return Err(result.error);

@@ -1,5 +1,4 @@
 import dynamic from "next/dynamic";
-import { Suspense } from "react";
 import { publishArticle } from "@/app/actions";
 
 const Editor = dynamic(() => import("./editor"), {

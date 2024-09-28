@@ -49,11 +49,11 @@ const telegramProvider = CredentialsProvider({
 export const nextAuthOptions: NextAuthConfig = {
   providers: [telegramProvider],
   callbacks: {
-    async session({ session, user, token }) {
+    async session({ session }) {
       session.user.id = session.user.email;
       return session;
     },
-    redirect({ url, baseUrl }) {
+    redirect({ url }) {
       return url;
     },
   },

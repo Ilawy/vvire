@@ -24,6 +24,7 @@ const VERSION = "2.30.6";
 interface FormProps {
   title: string;
   slug: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   content: any;
 }
 
@@ -43,10 +44,9 @@ type EditorProps =
 
 export default function Editor(props: EditorProps) {
   let done = false;
-  const [loading, setLoading] = useState(false);
   const [editor, setEditor] = useState<EditorJS | null>(null);
   const [showExtras, setShowExtras] = useState(false);
-  const { register, handleSubmit, setValue, watch } = useForm<FormProps>();
+  const { register, handleSubmit, watch } = useForm<FormProps>();
   const currentFormData = watch();
   const router = useRouter();
 
@@ -74,6 +74,8 @@ export default function Editor(props: EditorProps) {
         await props.func({
           title: formProps.title,
           slug: formProps.slug,
+
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           content: output.blocks as any,
           time: output.time!,
         })
@@ -82,6 +84,7 @@ export default function Editor(props: EditorProps) {
       result = resultifyJson(
         await props.func(props.data.slug, {
           slug: formProps.slug,
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           content: output.blocks as any,
           title: formProps.title,
         })
@@ -120,7 +123,6 @@ export default function Editor(props: EditorProps) {
       },
       placeholder: "Your Story...",
       onReady() {},
-      onChange(api, event) {},
     });
     setEditor(editor);
     done = true;

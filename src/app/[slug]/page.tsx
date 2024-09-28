@@ -1,12 +1,5 @@
-import { db } from "@/db";
-import { Article, articles, redirects } from "@/db/schema/models";
-import { users } from "@/db/schema/users";
-import { NotFoundError, resultify } from "@/lib/result";
-import { Page, TNode } from "@/lib/telegraph-types";
-import { eq } from "drizzle-orm";
-import { headers } from "next/headers";
+import { NotFoundError } from "@/lib/result";
 import { notFound } from "next/navigation";
-import { Err, Ok, Result } from "ts-results-es";
 import { z } from "zod";
 import PageNotAvailable from "./page-not-available";
 import { DateTime } from "luxon";
@@ -64,10 +57,10 @@ export default async function RenderPage({
           {content.data.map((block) => {
             if (block.type === "header") {
               const H = `h${block.data.level}` as "h1" | "h2" | "h3" | "h4";
-              return <H>{block.data.text}</H>;
+              return <H key={block.id}>{block.data.text}</H>;
             }
             if (block.type === "paragraph") {
-              return <p>{block.data.text}</p>;
+              return <p key={block.id}>{block.data.text}</p>;
             }
           })}
         </article>
