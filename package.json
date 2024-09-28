@@ -35,6 +35,7 @@
     "react-dom": "^18",
     "react-editor-js": "^2.1.0",
     "react-hook-form": "^7.53.0",
+    "react-spinners": "^0.14.1",
     "react-use": "^17.5.1",
     "slugify": "^1.6.6",
     "sonner": "^1.5.0",

@@ -222,3 +222,50 @@ export async function fetchArticle(
   }
   return Err(result.error);
 }
+
+export async function fetchArticleSlugs(): Promise<
+  Result<
+    {
+      slug: string;
+    }[],
+    Error
+  >
+> {
+  const result = await resultify(
+    db.select({ slug: articles.slug }).from(articles).all()
+  );
+  if (result.isOk()) {
+    return Ok(result.value);
+  }
+  return Err(result.error);
+}
+
+export async function fetchArticleProps(slug: string): Promise<
+  Result<
+    {
+      slug: string;
+      title: string;
+      added_at: Date;
+    },
+    Error
+  >
+> {
+  const result = await resultify(
+    db
+      .select({
+        slug: articles.slug,
+        title: articles.title,
+        added_at: articles.added_at,
+      })
+      .from(articles)
+      .where(eq(articles.slug, slug))
+      .limit(1)
+      .all()
+      .then((d) => d.at(0))
+  );
+  if (result.isOk()) {
+    if (!result.value) return Err(new NotFoundError());
+    return Ok(result.value);
+  }
+  return Err(result.error);
+}
