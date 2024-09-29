@@ -46,18 +46,30 @@ export default function Editor(props: EditorProps) {
   let done = false;
   const [editor, setEditor] = useState<EditorJS | null>(null);
   const [showExtras, setShowExtras] = useState(false);
-  const { register, handleSubmit, watch } = useForm<FormProps>();
+  const {
+    register,
+    handleSubmit,
+    watch,
+    setError,
+    clearErrors,
+    formState: { errors },
+  } = useForm<FormProps>();
   const currentFormData = watch();
   const router = useRouter();
 
   async function submit(formProps: FormProps) {
-    if (!formProps.slug)
-      formProps.slug = slugify(formProps.title.trim(), {
+    if (!formProps.slug) {
+      let autoSlug = slugify(formProps.title.trim(), {
         lower: true,
       });
-
+      if (!/^[a-z0-9-]{4,}$/.test(autoSlug)) {
+        autoSlug = `${autoSlug}-${Math.random().toString(36).slice(3, 6)}`;
+      }
+      formProps.slug = autoSlug;
+    }
     if (!/^[a-z0-9-]{4,}$/.test(formProps.slug)) {
-      console.log("bad slug");
+      setShowExtras(true);
+      setError("slug", { message: "only lowercase alphanumeric allowed" });
       return;
     }
 
@@ -65,7 +77,7 @@ export default function Editor(props: EditorProps) {
     const output = await editor.save();
     if (output.blocks.length === 0) {
       //TODO show error
-      console.log("show error");
+      setError("content", { message: "content is required" });
       return;
     }
     let result: Result<string, CompleteError>;
@@ -91,8 +103,6 @@ export default function Editor(props: EditorProps) {
       );
     }
 
-    console.log(result);
-
     if (result.isOk()) {
       toast.success("published successfully");
       router.push(`/${result.value}`);
@@ -102,6 +112,8 @@ export default function Editor(props: EditorProps) {
       result.error instanceof CompleteError &&
       result.error.code === ErrorEnum.AlreadyExists
     ) {
+      setShowExtras(true);
+      setError("slug", { message: "slug already exists" });
     }
   }
   useEffectOnce(() => {
@@ -117,18 +129,22 @@ export default function Editor(props: EditorProps) {
     const editor = new EditorJS({
       holder: "editorjs",
       data,
+
       tools: {
         header: Header,
         quote: Quote,
       },
       placeholder: "Your Story...",
       onReady() {},
+      onChange() {
+        clearErrors("content");
+      },
     });
     setEditor(editor);
     done = true;
   });
   return (
-    <main className="max-w-3xl mx-auto p-3">
+    <main className="max-w-3xl mx-auto">
       <form onSubmit={handleSubmit(submit)} className="contents">
         <div className="flex items-center  flex-wrap my-3 gap-3">
           <input
@@ -151,7 +167,7 @@ export default function Editor(props: EditorProps) {
         <div
           className={cn(
             "overflow-hidden transition-all ease-in-out duration-500",
-            showExtras ? "max-h-16" : "max-h-0"
+            showExtras ? "max-h-24" : "max-h-0"
           )}
         >
           <label className="flex items-center gap-3 flex-wrap border w-fit p-3 rounded-lg">
@@ -165,13 +181,26 @@ export default function Editor(props: EditorProps) {
                   lower: true,
                 }
               )}
-              className="border p-1 rounded-lg"
+              className={cn(
+                "border p-1 rounded-lg",
+                errors.slug?.message && "ring-1 ring-red-500"
+              )}
               pattern="[a-z0-9-]+"
+              onFocus={() => setShowExtras(true)}
               {...register("slug")}
             />
+            {errors.slug?.message && (
+              <p className="text-red-500">{errors.slug?.message}</p>
+            )}
           </label>
         </div>
-        <article className="prose-xl" id="editorjs"></article>
+        <article
+          className={cn(
+            "prose-xl w-full p-0.5 transition-all ease-in-out duration-500",
+            errors.content?.message && "rounded-lg ring-2 ring-red-500"
+          )}
+          id="editorjs"
+        ></article>
       </form>
     </main>
   );

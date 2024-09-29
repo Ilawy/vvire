@@ -12,6 +12,25 @@ import {
 import { objectToAuthDataMap, AuthDataValidator } from "@telegram-auth/server";
 import { createUserOrUpdate } from "./actions";
 
+const localProvider = CredentialsProvider({
+  id: "local",
+  name: "Local",
+  type: "credentials",
+  credentials: {},
+  async authorize() {
+    await createUserOrUpdate({
+      first_name: "Local",
+      last_name: "User",
+      id: -999,
+    });
+    return {
+      id: "-999",
+      email: "-999",
+      name: "Local User AVD",
+    };
+  },
+});
+
 const telegramProvider = CredentialsProvider({
   id: "telegram",
   name: "Telegram Login",
@@ -72,5 +91,8 @@ export const nextAuthOptions: NextAuthConfig = {
     verificationTokensTable: verificationTokens,
   }),
 };
+
+if (process.env.NODE_ENV === "development")
+  nextAuthOptions.providers.push(localProvider);
 
 export const { handlers, signIn, signOut, auth } = NextAuth(nextAuthOptions);

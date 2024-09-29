@@ -9,3 +9,9 @@ h1 {
 h2 {
   @apply text-4xl font-bold;
 }
+
+.codex-editor-overlay {
+  /* display: none; */
+  /* width: 100% !important; */
+  /* background: rgba(210, 180, 140, 0.25); */
+}

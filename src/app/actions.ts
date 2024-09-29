@@ -15,6 +15,7 @@ import { OutputData } from "@editorjs/editorjs";
 import { LibsqlError } from "@libsql/client";
 import { and, desc, eq, sql } from "drizzle-orm";
 import { Err, Ok, Result } from "ts-results-es";
+import { revalidatePath } from "next/cache";
 
 export async function generateCode() {
   "use server";
@@ -152,11 +153,11 @@ export async function updateArticle(
       },
     };
   console.log(data);
-
   const result = await resultify(
     db
       .update(articles)
       //TODO FIX ZOD TYPES
+      //TODO HARMFUL (DIRECT DATA INSERT)
       // @ts-expect-error zod types
       .set(data)
       .where(and(eq(articles.slug, slug), eq(articles.added_by, id)))
@@ -172,6 +173,8 @@ export async function updateArticle(
         code: ErrorEnum.Unknown,
       },
     };
+  revalidatePath(`/${slug}`);
+
   return {
     ok: true,
     data: result.value[0].slug,
@@ -283,9 +286,11 @@ export async function fetchMyArticles(offset = 0): Promise<
   >
 > {
   const session = await auth();
+  console.log(session?.user);
   if (!session) return Err(new NotFoundError());
   if (!session?.user?.id)
     return Err(new CompleteError("Not Authenticated", ErrorEnum.NoPermission));
+
   const LIMIT = 10;
   const result = await resultify(
     db.query.articles.findMany({

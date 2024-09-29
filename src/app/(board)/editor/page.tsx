@@ -8,9 +8,8 @@ const Editor = dynamic(() => import("./editor"), {
 
 export default function EditorPage() {
   return (
-    <div>
-      <h1>Editor</h1>
+    <main className="p-3 my-10 mx-auto max-w-4xl overflow-hidden">
       <Editor operation="create" func={publishArticle} />
-    </div>
+    </main>
   );
 }

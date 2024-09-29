@@ -1,3 +1,4 @@
+import LocalLoginButton from "@/components/local-login-button";
 import nextDynamic from "next/dynamic";
 
 const HomeCTA = nextDynamic(() => import("@/components/home-cta"), {
@@ -17,6 +18,7 @@ export default async function Home() {
         <p className="text-2xl">Make content without wasting time</p>
         <div>
           <HomeCTA />
+          {process.env.NODE_ENV === "development" && <LocalLoginButton />}
         </div>
       </main>
     </div>

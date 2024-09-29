@@ -23,8 +23,7 @@ export default async function EditorPage({
   console.log(article);
 
   return (
-    <div>
-      <h1>Editor</h1>
+    <main className="p-6 my-10 mx-auto max-w-4xl">
       <Editor
         operation="update"
         data={{
@@ -35,6 +34,6 @@ export default async function EditorPage({
         }}
         func={updateArticle}
       />
-    </div>
+    </main>
   );
 }

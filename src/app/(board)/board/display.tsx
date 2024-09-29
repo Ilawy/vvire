@@ -1,7 +1,7 @@
 "use client";
 import { Article } from "@/db/schema/models";
 import { cn } from "@/lib/utils";
-import { EyeIcon, SearchIcon } from "lucide-react";
+import { EyeIcon, PlusIcon, SearchIcon } from "lucide-react";
 import { DateTime } from "luxon";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
@@ -21,16 +21,23 @@ export default function Display({
   const params = useSearchParams();
   return (
     <div>
-      <div className="flex items-stretch w-fit">
-        <input
-          type="text"
-          className="border h-full p-3 rounded-tl-xl rounded-bl-xl"
-          placeholder="Search"
-          defaultValue={search}
-        />
-        <button className="bg-purple-200 px-4 rounded-tr-xl rounded-br-xl">
-          <SearchIcon />
-        </button>
+      <div className="my-3 flex items-center justify-between">
+        <div className="flex items-stretch w-fit">
+          <input
+            type="text"
+            className="border h-full p-3 rounded-tl-xl rounded-bl-xl"
+            placeholder="Search"
+            defaultValue={search}
+          />
+          <button className="bg-purple-200 px-4 rounded-tr-xl rounded-br-xl">
+            <SearchIcon />
+          </button>
+        </div>
+        <Link href={"/editor"}>
+          <button className="border p-3 rounded-lg shadow-md">
+            <PlusIcon />
+          </button>
+        </Link>
       </div>
       <ul className="my-3 grid grid-cols-1 md:grid-cols-3  gap-3 w-full">
         {items.map((item) => {
