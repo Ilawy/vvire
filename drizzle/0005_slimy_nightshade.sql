@@ -1,0 +1,1 @@
+ALTER TABLE `articles` ADD `role` text DEFAULT 'author' NOT NULL;
