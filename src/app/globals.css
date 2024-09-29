@@ -41,6 +41,19 @@ h2 {
     }
   }
 
+  & ol {
+    list-style-type: decimal;
+    & ol {
+      list-style-type: decimal;
+      & ol {
+        list-style-type: decimal;
+        & ol {
+          list-style-type: decimal;
+        }
+      }
+    }
+  }
+
   & ul.checklist {
     list-style-type: none !important;
     padding-inline-start: 0 !important;

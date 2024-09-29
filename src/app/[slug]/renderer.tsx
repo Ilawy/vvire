@@ -65,6 +65,13 @@ const CheckListBlock = BaseBlock.extend({
       .array(),
   }),
 });
+const TableBlock = BaseBlock.extend({
+  type: z.literal("table"),
+  data: z.object({
+    withHeadings: z.boolean(),
+    content: z.array(z.array(z.string())),
+  }),
+});
 
 const Block = z.union([
   HeadingBlock,
@@ -73,6 +80,7 @@ const Block = z.union([
   DelimiterBlock,
   ListBlock,
   CheckListBlock,
+  TableBlock,
 ]);
 
 interface BlockProps<B> {
@@ -133,6 +141,24 @@ function CheckList({ block }: BlockProps<z.infer<typeof CheckListBlock>>) {
   );
 }
 
+function Table({ block }: BlockProps<z.infer<typeof TableBlock>>) {
+  return (
+    <table className="border w-full p-3">
+      <tbody>
+        {block.data.content.map((row, i) => (
+          <tr key={i} className="border">
+            {row.map((cell, j) => (
+              <td key={j} className="border p-3">
+                {cell}
+              </td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
+}
+
 interface Props {
   article: ReturnType<Awaited<ReturnType<typeof fetchArticle>>["unwrap"]>;
 }
@@ -166,6 +192,8 @@ export default function Renderer({ article }: Props) {
           if (block.type === "list") return <List key={"X"} block={block} />;
           if (block.type === "checklist")
             return <CheckList key={block.id} block={block} />;
+          if (block.type === "table")
+            return <Table key={block.id} block={block} />;
           else throw new Error("Unknown block type");
         })}
       </article>

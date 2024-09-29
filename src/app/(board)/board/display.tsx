@@ -42,23 +42,25 @@ export default function Display({
       <ul className="my-3 grid grid-cols-1 md:grid-cols-3  gap-3 w-full">
         {items.map((item) => {
           return (
-            <li key={item.slug} className="shadow border p-3">
-              <div className="col-span-full py-2 flex" dir="auto">
-                <bdi>{item.title}</bdi>
-              </div>
-              <div className="col-span-full flex items-center justify-between p-1">
-                <small>
-                  <i>
-                    {DateTime.fromJSDate(item.added_at!).toFormat(
-                      "dd LLL yyyy"
-                    )}
-                  </i>
-                </small>
-                <small className="flex items-center gap-1">
-                  <EyeIcon size={16} /> <span>25</span>
-                </small>
-              </div>
-            </li>
+            <Link key={item.slug} href={`/${item.slug}`} className="contents">
+              <li className="shadow border p-3">
+                <div className="col-span-full py-2 flex" dir="auto">
+                  <bdi>{item.title}</bdi>
+                </div>
+                <div className="col-span-full flex items-center justify-between p-1">
+                  <small>
+                    <i>
+                      {DateTime.fromJSDate(item.added_at!).toFormat(
+                        "dd LLL yyyy"
+                      )}
+                    </i>
+                  </small>
+                  <small className="flex items-center gap-1">
+                    <EyeIcon size={16} /> <span>25</span>
+                  </small>
+                </div>
+              </li>
+            </Link>
           );
         })}
       </ul>

@@ -22,6 +22,7 @@
     "@editorjs/nested-list": "^1.4.3",
     "@editorjs/paragraph": "^2.11.6",
     "@editorjs/quote": "^2.7.2",
+    "@editorjs/table": "^2.4.1",
     "@libsql/client": "^0.14.0",
     "@telegram-auth/react": "^1.0.4",
     "@telegram-auth/server": "^1.0.4",

@@ -6,8 +6,9 @@ import Delimiter from "@editorjs/delimiter";
 import NestedList from "@editorjs/nested-list";
 //@ts-expect-error Typeless
 import Checklist from "@editorjs/checklist";
-//@ts-expect-error Typeless
-import Embed from "@editorjs/embed";
+// // @ts-expect-error Typeless
+// import Embed from "@editorjs/embed";
+import Table from "@editorjs/table";
 
 export default function createEditorJS(
   data?: OutputData,
@@ -23,7 +24,7 @@ export default function createEditorJS(
       delimiter: Delimiter,
       list: NestedList,
       checklist: Checklist,
-      embed: Embed,
+      table: Table,
       // embed: {
       //   class: Embed,
       //   config: {
