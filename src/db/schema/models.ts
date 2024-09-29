@@ -16,6 +16,10 @@ export const articles = sqliteTable(
     title: text("title").notNull(),
     slug: text("slug").notNull(),
 
+    public: integer("public", { mode: "boolean" }).notNull().default(true),
+    // prettier-ignore
+    role: text("role", {enum: ["author", "sudo"]}).notNull().default("author"),
+
     content: text("content", {
       mode: "json",
     })

@@ -2,6 +2,7 @@ import { db } from "@/db";
 import { users } from "@/db/schema/users";
 import {
   ActionResult,
+  CompleteError,
   ErrorEnum,
   NotFoundError,
   resultify,
@@ -12,7 +13,7 @@ import { auth } from "./auth";
 import { Article, articles, redirects } from "@/db/schema/models";
 import { OutputData } from "@editorjs/editorjs";
 import { LibsqlError } from "@libsql/client";
-import { and, eq } from "drizzle-orm";
+import { and, desc, eq, sql } from "drizzle-orm";
 import { Err, Ok, Result } from "ts-results-es";
 
 export async function generateCode() {
@@ -268,4 +269,42 @@ export async function fetchArticleProps(slug: string): Promise<
     return Ok(result.value);
   }
   return Err(result.error);
+}
+
+export async function fetchMyArticles(offset = 0): Promise<
+  Result<
+    {
+      slug: string;
+      title: string;
+      added_at: Date;
+      count: number;
+    }[],
+    Error
+  >
+> {
+  const session = await auth();
+  if (!session) return Err(new NotFoundError());
+  if (!session?.user?.id)
+    return Err(new CompleteError("Not Authenticated", ErrorEnum.NoPermission));
+  const LIMIT = 10;
+  const result = await resultify(
+    db.query.articles.findMany({
+      orderBy: desc(articles.added_at),
+      columns: {
+        slug: true,
+        title: true,
+        added_at: true,
+      },
+      limit: LIMIT,
+      offset,
+      where: eq(articles.added_by, session.user.id),
+      extras: {
+        count:
+          sql<number>`(select count(*) from ${articles} where ${articles.added_by} = ${session.user.id})`.as(
+            "count"
+          ),
+      },
+    })
+  );
+  return result;
 }
