@@ -1,8 +1,4 @@
-import EditorJS, {
-  EditorConfig,
-  OutputData,
-  ToolConstructable,
-} from "@editorjs/editorjs";
+import EditorJS, { EditorConfig, OutputData } from "@editorjs/editorjs";
 
 import Header from "@editorjs/header";
 import Quote from "@editorjs/quote";
@@ -22,19 +18,20 @@ export default function createEditorJS(
     holder: "editorjs",
     data,
 
+    //TODO CHECK US
     tools: {
-      //@ts-expect-error
+      //@ts-expect-error Type conflict
       header: {
         class: Header,
         inlineToolbar: true,
       },
-      // @ts-expect-error
+      //@ts-expect-error Type conflict
       quote: {
         class: Quote,
         inlineToolbar: true,
       },
       delimiter: Delimiter,
-      // @ts-expect-error
+      //@ts-expect-error Type conflict
       list: {
         class: NestedList,
         inlineToolbar: true,
@@ -43,7 +40,7 @@ export default function createEditorJS(
         class: Checklist,
         inlineToolbar: true,
       },
-      // @ts-expect-error
+      //@ts-expect-error Type conflict
       table: {
         class: Table,
         inlineToolbar: true,
