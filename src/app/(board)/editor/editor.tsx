@@ -72,15 +72,15 @@ export default function Editor(props: EditorProps) {
       setError("slug", { message: "only lowercase alphanumeric allowed" });
       return;
     }
-
+    //TODO show error
     if (!editor) return;
     const output = await editor.save();
     if (output.blocks.length === 0) {
-      //TODO show error
       setError("content", { message: "content is required" });
       return;
     }
     let result: Result<string, CompleteError>;
+    const toast_id = toast.loading("publishing...");
     if (props.operation === "create") {
       result = resultifyJson(
         await props.func({
@@ -104,7 +104,9 @@ export default function Editor(props: EditorProps) {
     }
 
     if (result.isOk()) {
-      toast.success("published successfully");
+      toast.success("published successfully", {
+        id: toast_id,
+      });
       router.push(`/${result.value}`);
       return;
     }
@@ -114,6 +116,13 @@ export default function Editor(props: EditorProps) {
     ) {
       setShowExtras(true);
       setError("slug", { message: "slug already exists" });
+      toast.error("slug already exists", {
+        id: toast_id,
+      });
+    } else {
+      toast.error(result.error.message, {
+        id: toast_id,
+      });
     }
   }
   useEffectOnce(() => {
