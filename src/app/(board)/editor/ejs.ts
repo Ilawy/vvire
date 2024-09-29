@@ -1,4 +1,8 @@
-import EditorJS, { EditorConfig, OutputData } from "@editorjs/editorjs";
+import EditorJS, {
+  EditorConfig,
+  OutputData,
+  ToolConstructable,
+} from "@editorjs/editorjs";
 
 import Header from "@editorjs/header";
 import Quote from "@editorjs/quote";
@@ -14,17 +18,36 @@ export default function createEditorJS(
   data?: OutputData,
   config?: EditorConfig
 ) {
-  const finalConfig = {
+  const finalConfig: EditorConfig = {
     holder: "editorjs",
     data,
 
     tools: {
-      header: Header,
-      quote: Quote,
+      //@ts-expect-error
+      header: {
+        class: Header,
+        inlineToolbar: true,
+      },
+      // @ts-expect-error
+      quote: {
+        class: Quote,
+        inlineToolbar: true,
+      },
       delimiter: Delimiter,
-      list: NestedList,
-      checklist: Checklist,
-      table: Table,
+      // @ts-expect-error
+      list: {
+        class: NestedList,
+        inlineToolbar: true,
+      },
+      checklist: {
+        class: Checklist,
+        inlineToolbar: true,
+      },
+      // @ts-expect-error
+      table: {
+        class: Table,
+        inlineToolbar: true,
+      },
       // embed: {
       //   class: Embed,
       //   config: {
@@ -37,6 +60,7 @@ export default function createEditorJS(
       // },
     },
     placeholder: "Your Story...",
+    inlineToolbar: true,
     ...(config || {}),
   };
   return new EditorJS(finalConfig);

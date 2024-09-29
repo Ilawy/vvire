@@ -100,7 +100,9 @@ function Quote({ block }: BlockProps<z.infer<typeof QuoteBlock>>) {
   return (
     <blockquote>
       <p dangerouslySetInnerHTML={{ __html: block.data.text }}></p>
-      <figcaption>{block.data.caption}</figcaption>
+      <figcaption
+        dangerouslySetInnerHTML={{ __html: block.data.caption || "" }}
+      ></figcaption>
     </blockquote>
   );
 }
@@ -115,7 +117,7 @@ function List({ block }: BlockProps<z.infer<typeof ListBlock>>) {
     <L>
       {block.data.items.map((item) => (
         <li key={item.content}>
-          {item.content}
+          <span dangerouslySetInnerHTML={{ __html: item.content }}></span>
           <List
             block={{
               type: block.type,
@@ -134,7 +136,7 @@ function CheckList({ block }: BlockProps<z.infer<typeof CheckListBlock>>) {
       {block.data.items.map((item) => (
         <li key={item.text}>
           <input type="checkbox" readOnly checked={item.checked} />
-          {item.text}
+          <span dangerouslySetInnerHTML={{ __html: item.text }}></span>
         </li>
       ))}
     </ul>
@@ -148,9 +150,11 @@ function Table({ block }: BlockProps<z.infer<typeof TableBlock>>) {
         {block.data.content.map((row, i) => (
           <tr key={i} className="border">
             {row.map((cell, j) => (
-              <td key={j} className="border p-3">
-                {cell}
-              </td>
+              <td
+                key={j}
+                className="border p-3"
+                dangerouslySetInnerHTML={{ __html: cell }}
+              ></td>
             ))}
           </tr>
         ))}
