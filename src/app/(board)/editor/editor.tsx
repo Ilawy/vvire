@@ -1,11 +1,8 @@
 "use client";
 
 import { useEffectOnce } from "react-use";
-import EditorJS, { OutputData } from "@editorjs/editorjs";
 import { useState } from "react";
-
-import Header from "@editorjs/header";
-import Quote from "@editorjs/quote";
+import EditorJS, { OutputData } from "@editorjs/editorjs";
 
 import {
   type publishArticle as _publishArticle,
@@ -18,6 +15,7 @@ import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { Result } from "ts-results-es";
+import createEditorJS from "./ejs";
 
 const VERSION = "2.30.6";
 
@@ -135,16 +133,7 @@ export default function Editor(props: EditorProps) {
             time: props.data.time,
           }
         : undefined;
-    const editor = new EditorJS({
-      holder: "editorjs",
-      data,
-
-      tools: {
-        header: Header,
-        quote: Quote,
-      },
-      placeholder: "Your Story...",
-      onReady() {},
+    const editor = createEditorJS(data, {
       onChange() {
         clearErrors("content");
       },

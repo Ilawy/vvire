@@ -14,8 +14,12 @@
   },
   "dependencies": {
     "@auth/drizzle-adapter": "^1.5.2",
+    "@editorjs/checklist": "^1.6.0",
+    "@editorjs/delimiter": "^1.4.2",
     "@editorjs/editorjs": "^2.30.6",
+    "@editorjs/embed": "^2.7.4",
     "@editorjs/header": "^2.8.7",
+    "@editorjs/nested-list": "^1.4.3",
     "@editorjs/paragraph": "^2.11.6",
     "@editorjs/quote": "^2.7.2",
     "@libsql/client": "^0.14.0",
