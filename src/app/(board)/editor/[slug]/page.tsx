@@ -14,7 +14,7 @@ export default async function EditorPage({
 }: {
   params: { slug: string };
 }) {
-  const result = await fetchArticle(slug);
+  const result = await fetchArticle(slug, true);
   if (result.isErr()) {
     if (result.error instanceof NotFoundError) notFound();
     return <div>{result.error.message}</div>;
