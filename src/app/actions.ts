@@ -173,7 +173,7 @@ export async function updateArticle(
         code: ErrorEnum.Unknown,
       },
     };
-  revalidatePath(`/${slug}`);
+  revalidatePath(`/${result.value[0].slug}`);
 
   return {
     ok: true,
