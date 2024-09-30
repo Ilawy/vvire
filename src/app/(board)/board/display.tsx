@@ -25,11 +25,11 @@ export default function Display({
         <div className="flex items-stretch w-fit">
           <input
             type="text"
-            className="border h-full p-3 rounded-tl-xl rounded-bl-xl"
+            className="h-full p-3 rounded-tl-xl rounded-bl-xl dark:bg-slate-800"
             placeholder="Search"
             defaultValue={search}
           />
-          <button className="bg-purple-200 px-4 rounded-tr-xl rounded-br-xl">
+          <button className="bg-purple-200 dark:bg-purple-700 text-white font-bold py-2 px-4 rounded-tr-xl rounded-br-xl">
             <SearchIcon />
           </button>
         </div>

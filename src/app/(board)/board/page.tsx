@@ -20,7 +20,7 @@ export default async function BoardPage(props: {
   console.log(result);
 
   return (
-    <main className="p-6 my-10 mx-auto max-w-4xl">
+    <main className="p-6 my-10 mx-auto max-w-4xl dark:text-slate-200">
       <h2>Welcome Back</h2>
       {
         <Display
