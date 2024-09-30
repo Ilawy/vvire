@@ -23,7 +23,7 @@ export default async function EditorPage({
   console.log(article);
 
   return (
-    <main className="p-6 my-10 mx-auto max-w-4xl">
+    <main className="p-6 my-10 mx-auto max-w-4xl overflow-hidden text-slate-800 dark:text-slate-200">
       <Editor
         operation="update"
         data={{
