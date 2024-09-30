@@ -5,7 +5,7 @@ import { notFound } from "next/navigation";
 
 export const generateStaticParams = async (): Promise<{ slug: string }[]> => {
   const articlesResult = await fetchArticleSlugs();
-  //FATAL
+  //TODO HANDLE
   if (articlesResult.isErr()) throw new Error(articlesResult.error.message);
   const articles = articlesResult.value;
   const paths = articles.map((art) => ({ slug: art.slug }));
