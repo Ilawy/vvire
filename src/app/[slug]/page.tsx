@@ -20,7 +20,7 @@ export default async function RenderPage({
   const result = await fetchArticle(slug);
   if (result.isErr()) {
     if (result.error instanceof NotFoundError) notFound();
-    return <div>{result.error.message}</div>;
+    return <div className="text-red-500">{result.error.message}</div>;
   }
   const article = result.value;
 

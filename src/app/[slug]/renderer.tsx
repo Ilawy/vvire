@@ -175,7 +175,7 @@ export default function Renderer({ article }: Props) {
   }
 
   return (
-    <main className="p-6 my-10 mx-auto max-w-4xl">
+    <main className="p-6 my-10 mx-auto max-w-4xl text-slate-800 dark:text-slate-200">
       <div className="flex items-center justify-between">
         <h1>{article.title}</h1>
         <ClickToEdit author_id={article.author_id} slug={article.slug} />
