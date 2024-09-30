@@ -17,7 +17,6 @@ export default function createEditorJS(
   const finalConfig: EditorConfig = {
     holder: "editorjs",
     data,
-
     //TODO CHECK US
     tools: {
       //@ts-expect-error Type conflict

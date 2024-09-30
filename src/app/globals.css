@@ -66,3 +66,52 @@ h2 {
     }
   }
 }
+
+:root {
+  --i-bg: inherit;
+  --i-text: #000;
+  --i-bg-hover: #f5f5f5;
+  --i-text-hover: #000;
+}
+
+@media screen and (prefers-color-scheme: dark) {
+  :root {
+    --i-bg: inherit;
+    --i-text: #fff;
+    --i-bg-hover: #333;
+    --i-text-hover: #fff;
+  }
+}
+
+.cdx-block,
+.ce-header,
+.inlineToolButton,
+.ce-toolbar__plus,
+.ce-toolbar__settings-btn,
+.ce-popover__search {
+  background-color: var(--i-bg);
+  color: var(--i-text);
+}
+
+.ce-toolbar__plus:hover,
+.ce-toolbar__settings-btn:hover,
+.cdx-loader,
+.cdx-button {
+  color: var(--i-text-hover);
+  background-color: var(--i-bg-hover);
+}
+
+.cdx-button:hover {
+  background-color: var(--i-bg-hover);
+}
+
+.ce-popover,
+.ce-popover-item,
+.ce-popover-item__icon,
+.ce-popover-items,
+.ce-popover-item:hover {
+  --color-background-item-hover: var(--i-bg-hover);
+  background-color: var(--i-bg-hover);
+  color: var(--i-text-hover);
+  border: none;
+}

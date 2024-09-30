@@ -16,6 +16,7 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { Result } from "ts-results-es";
 import createEditorJS from "./ejs";
+import { MoreHorizontalIcon } from "lucide-react";
 
 const VERSION = "2.30.6";
 
@@ -148,7 +149,7 @@ export default function Editor(props: EditorProps) {
           <input
             placeholder="Title"
             type="text"
-            className="text-3xl px-3 py-2.5 flex-1"
+            className="text-3xl px-3 py-2.5 flex-1 bg-inherit"
             required
             defaultValue={props.operation === "update" ? props.data.title : ""}
             {...register("title")}
@@ -159,7 +160,7 @@ export default function Editor(props: EditorProps) {
             type="button"
             onClick={() => setShowExtras(!showExtras)}
           >
-            ...
+            <MoreHorizontalIcon />
           </button>
         </div>
         <div
@@ -168,7 +169,7 @@ export default function Editor(props: EditorProps) {
             showExtras ? "max-h-24" : "max-h-0"
           )}
         >
-          <label className="flex items-center gap-3 flex-wrap border w-fit p-3 rounded-lg">
+          <label className="flex items-center gap-3 flex-wrap border w-fit p-3 rounded-lg dark:bg-slate-800">
             Slug
             <input
               type="text"
@@ -181,6 +182,7 @@ export default function Editor(props: EditorProps) {
               )}
               className={cn(
                 "border p-1 rounded-lg",
+                "dark:bg-slate-800",
                 errors.slug?.message && "ring-1 ring-red-500"
               )}
               pattern="[a-z0-9-]+"
