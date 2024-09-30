@@ -16,9 +16,14 @@ export default async function Home() {
       {/* <header className="border-b p-3">
         <small>About</small>
       </header> */}
-      <main className={cn("p-6 my-10 mx-auto max-w-4xl flex flex-col gap-4")}>
+      <main
+        className={cn(
+          "p-6 my-10 mx-auto max-w-4xl flex flex-col gap-4",
+          "dark:prose-invert text-slate-800 dark:text-slate-200"
+        )}
+      >
         <h2 className="font-semibold">Streamline Your Publishing Workflow</h2>
-        <p className="text-2xl prose">
+        <p className="text-2xl">
           Focus on what matters most – creating great content. Our minimalist
           publishing tool helps you stay productive and efficient.
         </p>
